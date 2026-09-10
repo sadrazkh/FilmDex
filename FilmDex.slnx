@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/FilmDex.App/FilmDex.App.csproj" />
+    <Project Path="src/FilmDex.Core/FilmDex.Core.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/FilmDex.Core.Tests/FilmDex.Core.Tests.csproj" />
+  </Folder>
+</Solution>
