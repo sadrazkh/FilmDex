@@ -18,6 +18,8 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <AssemblyTitle>FilmDex</AssemblyTitle>
     <Product>FilmDex</Product>
+    <!-- The release workflow overrides this with the version from the tag it was triggered by. -->
+    <Version>0.1.0</Version>
   </PropertyGroup>
 
 </Project>

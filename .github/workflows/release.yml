@@ -1,0 +1,109 @@
+name: release
+
+on:
+  push:
+    tags: [ 'v*' ]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to build by hand, without the leading v (e.g. 0.1.0)'
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  portable:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Work out the version
+        id: version
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            version="${{ inputs.version }}"
+          else
+            version="${GITHUB_REF_NAME#v}"
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "Building version $version"
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build -c Release --no-restore -p:Version=${{ steps.version.outputs.version }}
+
+      # The release must not ship code whose tests never ran.
+      - name: Test
+        run: dotnet test tests/FilmDex.Core.Tests -c Release --no-build --logger "console;verbosity=normal"
+
+      # Self-contained single file: the .exe carries the .NET runtime, so the machine it lands on
+      # needs nothing installed. Compression roughly halves it; native SQLite libraries have to be
+      # allowed to self-extract or the store cannot open a database.
+      - name: Publish the portable app
+        run: >
+          dotnet publish src/FilmDex.App
+          -c Release
+          -r win-x64
+          --self-contained true
+          -p:PublishSingleFile=true
+          -p:IncludeNativeLibrariesForSelfExtract=true
+          -p:EnableCompressionInSingleFile=true
+          -p:DebugType=none
+          -p:Version=${{ steps.version.outputs.version }}
+          -o artifacts/portable
+
+      - name: Package
+        shell: pwsh
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          $stem  = "FilmDex-$env:VERSION-win-x64-portable"
+          $stage = "package/$stem"
+          New-Item -ItemType Directory -Force -Path $stage | Out-Null
+          Copy-Item artifacts/portable/FilmDex.App.exe (Join-Path $stage 'FilmDex.exe')
+          Copy-Item README.md $stage
+          Compress-Archive -Path "$stage/*" -DestinationPath "package/$stem.zip"
+          $hash = (Get-FileHash "package/$stem.zip" -Algorithm SHA256).Hash
+          "$hash  $stem.zip" | Out-File -Encoding ascii "package/$stem.zip.sha256"
+          Write-Host "Packaged $stem.zip  ($([math]::Round((Get-Item "package/$stem.zip").Length / 1MB)) MB)"
+          Write-Host "SHA256 $hash"
+
+      - name: Keep the build as a run artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: FilmDex-portable-win-x64
+          path: |
+            package/*.zip
+            package/*.sha256
+
+      - name: Publish the GitHub release
+        if: startsWith(github.ref, 'refs/tags/')
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          $notes = @"
+          ### FilmDex $env:VERSION — نسخه‌ی پرتابل ویندوز
+
+          فایل zip را باز کن و ``FilmDex.exe`` را اجرا کن. نیازی به نصب دات‌نت یا هیچ چیز دیگری نیست.
+
+          - پوشه‌هایت را یک‌بار اسکن می‌کند و نام فایل‌ها را نگه می‌دارد؛ بعد از آن هارد لازم نیست وصل باشد.
+          - در بخش جستجو اسم فیلم را بزن — نتایج با **درصد شباهت عنوان** و **درصد شباهت نام خام** می‌آیند.
+          - آرشیو در ``%LOCALAPPDATA%\FilmDex\filmdex.db`` نگهداری می‌شود.
+
+          A portable Windows build. Unzip, run ``FilmDex.exe`` — no .NET install needed.
+          Verify the download against the ``.sha256`` file published beside it.
+          "@
+          gh release create "$env:GITHUB_REF_NAME" (Get-ChildItem package -File | ForEach-Object FullName) `
+            --title "FilmDex $env:VERSION" `
+            --notes "$notes"
