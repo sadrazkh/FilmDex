@@ -1,23 +1,30 @@
-﻿using System.Text;
+using System.IO;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using FilmDex.App.ViewModels;
 
 namespace FilmDex.App;
 
-/// <summary>
-/// Interaction logic for MainWindow.xaml
-/// </summary>
 public partial class MainWindow : Window
 {
-    public MainWindow()
+    public MainWindow() => InitializeComponent();
+
+    private void OnDragOver(object sender, DragEventArgs e)
     {
-        InitializeComponent();
+        var hasFolders = e.Data.GetDataPresent(DataFormats.FileDrop);
+
+        e.Effects = hasFolders ? DragDropEffects.Copy : DragDropEffects.None;
+        e.Handled = true;
+    }
+
+    private async void OnDrop(object sender, DragEventArgs e)
+    {
+        if (DataContext is not MainViewModel viewModel) return;
+        if (e.Data.GetData(DataFormats.FileDrop) is not string[] dropped) return;
+
+        var folders = dropped.Where(Directory.Exists).ToArray();
+        if (folders.Length == 0) return;
+
+        viewModel.Section = 0;
+        await viewModel.Libraries.AddFoldersAsync(folders);
     }
 }

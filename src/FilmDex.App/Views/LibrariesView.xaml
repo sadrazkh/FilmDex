@@ -1,0 +1,181 @@
+<UserControl x:Class="FilmDex.App.Views.LibrariesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:viewModels="clr-namespace:FilmDex.App.ViewModels"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance viewModels:LibrariesViewModel}">
+
+    <Grid Margin="30,26,30,20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Grid Grid.Row="0" Margin="0,0,0,18">
+            <StackPanel HorizontalAlignment="Right">
+                <TextBlock Text="کتابخانه‌ها" Style="{StaticResource SectionTitle}" />
+                <TextBlock Style="{StaticResource Muted}" MaxWidth="620" HorizontalAlignment="Right"
+                           Text="هر پوشه یک‌بار خوانده می‌شود و نام‌ها در حافظه‌ی برنامه می‌مانند. بعد از آن، درایو می‌تواند وصل نباشد." />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Button Command="{Binding AddFolderCommand}"
+                        IsEnabled="{Binding IsScanning, Converter={StaticResource InverseBoolean}}"
+                        Height="40" Padding="18,0">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Plus" VerticalAlignment="Center" />
+                        <TextBlock Text="افزودن پوشه" Margin="8,0,0,0" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button>
+
+                <Button Command="{Binding ReparseCommand}"
+                        IsEnabled="{Binding IsScanning, Converter={StaticResource InverseBoolean}}"
+                        Style="{StaticResource MaterialDesignFlatButton}"
+                        Margin="10,0,0,0" Height="40"
+                        ToolTip="نام‌های ذخیره‌شده را دوباره تحلیل می‌کند، بدون خواندن دیسک">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Autorenew" VerticalAlignment="Center" />
+                        <TextBlock Text="تحلیل مجدد نام‌ها" Margin="8,0,0,0" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Grid>
+
+        <!-- Scan status -->
+        <Border Grid.Row="1" Margin="0,0,0,16" Padding="18,14" CornerRadius="14"
+                Background="{DynamicResource MaterialDesignCardBackground}"
+                Visibility="{Binding ScanStatus, Converter={StaticResource TextToVisibility}}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <materialDesign:PackIcon Grid.Column="0" Kind="Information" Width="22" Height="22"
+                                         VerticalAlignment="Center" Margin="0,0,12,0"
+                                         Foreground="{DynamicResource PrimaryHueLightBrush}" />
+
+                <StackPanel Grid.Column="1">
+                    <TextBlock Text="{Binding ScanStatus}" FontWeight="SemiBold" TextWrapping="Wrap" />
+                    <TextBlock Text="{Binding ScanDetail}" Style="{StaticResource Muted}" FontSize="12"
+                               TextTrimming="CharacterEllipsis" Margin="0,3,0,0"
+                               Visibility="{Binding ScanDetail, Converter={StaticResource TextToVisibility}}" />
+                    <ProgressBar IsIndeterminate="True" Height="4" Margin="0,10,0,0"
+                                 Visibility="{Binding IsScanning, Converter={StaticResource BoolToVisibility}}" />
+                </StackPanel>
+
+                <Button Grid.Column="2" Command="{Binding CancelScanCommand}"
+                        Style="{StaticResource MaterialDesignFlatButton}"
+                        Margin="12,0,0,0" VerticalAlignment="Center"
+                        Visibility="{Binding IsScanning, Converter={StaticResource BoolToVisibility}}"
+                        Content="لغو" />
+            </Grid>
+        </Border>
+
+        <!-- Empty state -->
+        <Border Grid.Row="2" CornerRadius="18" Padding="40"
+                Background="{DynamicResource MaterialDesignCardBackground}"
+                VerticalAlignment="Center" HorizontalAlignment="Center"
+                Visibility="{Binding IsEmpty, Converter={StaticResource BoolToVisibility}}">
+            <StackPanel HorizontalAlignment="Center" MaxWidth="440">
+                <materialDesign:PackIcon Kind="FolderPlusOutline" Width="56" Height="56"
+                                         HorizontalAlignment="Center" Opacity="0.5" />
+                <TextBlock Text="هنوز پوشه‌ای اضافه نشده" FontSize="18" FontWeight="SemiBold"
+                           HorizontalAlignment="Center" Margin="0,16,0,6" />
+                <TextBlock Style="{StaticResource Muted}" TextAlignment="Center"
+                           Text="پوشه‌ی فیلم‌ها را اضافه کن یا همین‌جا رهایش کن. یک‌بار خوانده می‌شود و بعد جستجو آفلاین کار می‌کند." />
+                <Button Command="{Binding AddFolderCommand}" Margin="0,20,0,0" Height="42"
+                        HorizontalAlignment="Center" Padding="22,0" Content="انتخاب پوشه" />
+            </StackPanel>
+        </Border>
+
+        <!-- Library list -->
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto"
+                      Visibility="{Binding IsEmpty, Converter={StaticResource NotToVisibility}}">
+            <ItemsControl ItemsSource="{Binding Items}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="viewModels:LibraryRow">
+                        <Border CornerRadius="16" Padding="20,16" Margin="0,0,0,12"
+                                Background="{DynamicResource MaterialDesignCardBackground}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <Border Grid.Column="0" Width="44" Height="44" CornerRadius="12"
+                                        Background="{DynamicResource MaterialDesignDivider}"
+                                        VerticalAlignment="Top" Margin="0,0,14,0">
+                                    <materialDesign:PackIcon Kind="Folder" Width="22" Height="22"
+                                                             HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                </Border>
+
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="{Binding Label}" FontSize="16" FontWeight="SemiBold"
+                                               TextTrimming="CharacterEllipsis" />
+                                    <!-- LTR text in an RTL panel: "Left" here means the visual right edge. -->
+                                    <TextBlock Text="{Binding RootPath}" Style="{StaticResource Muted}"
+                                               FontSize="12" FlowDirection="LeftToRight"
+                                               HorizontalAlignment="Left"
+                                               TextTrimming="CharacterEllipsis" Margin="0,2,0,0" />
+
+                                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                        <Border CornerRadius="9" Padding="10,3"
+                                                Background="{DynamicResource MaterialDesignDivider}">
+                                            <TextBlock Text="{Binding CountText}" FontSize="12" />
+                                        </Border>
+                                        <Border CornerRadius="9" Padding="10,3" Margin="8,0,0,0"
+                                                Background="{DynamicResource MaterialDesignDivider}">
+                                            <TextBlock Text="{Binding LastScanText}" FontSize="12" />
+                                        </Border>
+                                        <StackPanel Orientation="Horizontal" Margin="10,0,0,0" VerticalAlignment="Center">
+                                            <materialDesign:PackIcon Kind="{Binding AvailabilityIcon}"
+                                                                     Width="15" Height="15" VerticalAlignment="Center"
+                                                                     Opacity="0.75" />
+                                            <TextBlock Text="{Binding AvailabilityText}" FontSize="12"
+                                                       Margin="5,0,0,0" Opacity="0.75" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                                    <Button Style="{StaticResource MaterialDesignFlatButton}"
+                                            Command="{Binding DataContext.ScanCommand,
+                                                RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                            CommandParameter="{Binding}"
+                                            IsEnabled="{Binding DataContext.IsScanning,
+                                                RelativeSource={RelativeSource AncestorType=ItemsControl},
+                                                Converter={StaticResource InverseBoolean}}"
+                                            ToolTip="اسکن مجدد">
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon Kind="Refresh" VerticalAlignment="Center" />
+                                            <TextBlock Text="اسکن مجدد" Margin="8,0,0,0" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </Button>
+
+                                    <Button Style="{StaticResource MaterialDesignFlatButton}"
+                                            Command="{Binding DataContext.RemoveCommand,
+                                                RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                            CommandParameter="{Binding}"
+                                            IsEnabled="{Binding DataContext.IsScanning,
+                                                RelativeSource={RelativeSource AncestorType=ItemsControl},
+                                                Converter={StaticResource InverseBoolean}}"
+                                            Margin="4,0,0,0" ToolTip="حذف از حافظه‌ی برنامه">
+                                        <materialDesign:PackIcon Kind="DeleteOutline" />
+                                    </Button>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</UserControl>
