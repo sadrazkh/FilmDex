@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FilmDex — قبل از دانلود بفهم تکراری است یا نه</title>
+<meta name="description" content="FilmDex پوشه‌های فیلمت را یک‌بار می‌خواند و نام‌ها را نگه می‌دارد. بعد، بدون وصل بودن هارد، اسم فیلم را بزن و درصد شباهتش با آنچه داری را ببین. برنامه‌ی ویندوزی، پرتابل و متن‌باز.">
+<meta name="theme-color" content="#0a0810">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fa_IR">
+<meta property="og:url" content="https://sadrazkh.github.io/FilmDex/">
+<meta property="og:title" content="FilmDex — قبل از دانلود بفهم تکراری است یا نه">
+<meta property="og:description" content="پوشه‌هایت را یک‌بار می‌خواند و نام‌ها را نگه می‌دارد. بعد با درصد شباهت می‌گوید این فیلم را داری یا نه.">
+<meta property="og:image" content="https://sadrazkh.github.io/FilmDex/assets/screenshot-search.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css?v=1">
+</head>
+
+<body>
+
+<header class="site-header" id="header">
+  <div class="container">
+    <a class="brand" href="#top">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M3 8h18v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="m3 8 2-5 16 2-1 3"/><path d="m8 3 2 4M14 4l2 4"/>
+      </svg>
+      FilmDex
+    </a>
+    <nav class="nav">
+      <a href="#features">ویژگی‌ها</a>
+      <a href="#try">امتحانش کن</a>
+      <a href="#how">چطور کار می‌کند</a>
+      <a href="#internals">زیر کاپوت</a>
+      <a href="#download">دانلود</a>
+    </nav>
+    <a class="btn btn-ghost btn-sm header-cta" href="https://github.com/sadrazkh/FilmDex" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.8 18.3 5 18.3 5c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5z"/></svg>
+      گیت‌هاب
+    </a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ================= hero ================= -->
+  <section class="hero">
+    <div class="container">
+      <span class="chip"><span class="dot"></span> نسخه‌ی ۰.۱.۰ · ویندوز ۱۰ و ۱۱</span>
+
+      <h1>قبل از دانلود بفهم<br><span class="accent">تکراری است یا نه</span></h1>
+
+      <p class="lead">
+        FilmDex پوشه‌های فیلمت را <strong>یک‌بار</strong> می‌خواند و نام‌ها را در حافظه‌ی خودش نگه می‌دارد.
+        بعد از آن هارد لازم نیست وصل باشد: اسم فیلمی را که می‌خواهی بگیری بزن، و ببین چقدر به چیزی که
+        همین حالا داری شبیه است.
+      </p>
+
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="https://github.com/sadrazkh/FilmDex/releases/download/v0.1.0/FilmDex-0.1.0-win-x64-portable.zip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M4 21h16"/>
+          </svg>
+          دانلود نسخه‌ی پرتابل
+        </a>
+        <a class="btn btn-ghost" href="#try">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>
+          </svg>
+          همین‌جا امتحانش کن
+        </a>
+      </div>
+
+      <div class="hero-meta">
+        <span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>
+          بدون نصب، یک فایل اجرایی
+        </span>
+        <span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>
+          ۶۱ مگابایت، بدون نیاز به دات‌نت
+        </span>
+        <span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>
+          هیچ‌وقت به اینترنت وصل نمی‌شود
+        </span>
+        <span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>
+          متن‌باز
+        </span>
+      </div>
+
+      <figure class="shot" data-reveal style="margin-block-end:0">
+        <img src="assets/screenshot-search.png" width="1532" height="540"
+             alt="پنجره‌ی FilmDex: اسم کامل یک ریلیز در کادر جستجو، و دو نتیجه با درصد شباهت عنوان و نام خام.">
+        <figcaption class="shot-caption">
+          اسم کامل ریلیزی که می‌خواستی بگیری را بچسبان. این‌جا «The.Matrix.1999.REMASTERED…» را شناخته،
+          نسخه‌ی موجود را با ۱۰۰٪ شباهت عنوان آورده، و Reloaded را هم با ۸۰٪ و هشدار «سال متفاوت» کنارش گذاشته.
+        </figcaption>
+      </figure>
+
+      <div class="stats" data-reveal>
+        <div class="stat"><b>۲</b><span>معیار شباهت، کنار هم</span></div>
+        <div class="stat"><b>۶۵</b><span>تست خودکار روی هسته</span></div>
+        <div class="stat"><b>۱</b><span>فایل، بدون نصب</span></div>
+        <div class="stat"><b>۰</b><span>ارتباط با اینترنت</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= the problem ================= -->
+  <section style="padding-block-start:0">
+    <div class="container">
+      <div class="quote-card" data-reveal>
+        <p>
+          «یک فیلم را دانلود می‌کنی، سه ماه بعد همان را دوباره دانلود می‌کنی — چون اسمش این‌بار
+          <span class="ltr">Blade.Runner.2049.2017.2160p</span> است و آن‌یکی
+          <span class="ltr">BladeRunner2049-4K</span>.»
+        </p>
+        <p class="by">جستجوی دقیق این را پیدا نمی‌کند. برای همین FilmDex دنبال «شباهت» می‌گردد، نه تطابق.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= features ================= -->
+  <section id="features">
+    <div class="container">
+      <div class="section-head center" data-reveal>
+        <span class="eyebrow">ویژگی‌ها</span>
+        <h2>چیزی که واقعاً لازم داری، نه بیشتر</h2>
+        <p>یک ابزار شخصی که یک کار را درست انجام می‌دهد: به تو بگوید این فیلم را داری یا نه.</p>
+      </div>
+
+      <div class="grid-3">
+        <article class="card" data-reveal>
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg>
+          </div>
+          <h3>دو درصد، نه یک درصد</h3>
+          <p>
+            یکی شباهت «عنوان تمیزشده» و یکی شباهت «نام خام». اگر پارسر اسمی را عجیب فهمید، باز هم از
+            راه نام خام می‌بینی‌اش. قضاوت نهایی با خودت است.
+          </p>
+        </article>
+
+        <article class="card" data-reveal>
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2"/><path d="M9 20h6"/><path d="M12 16v4"/><rect x="2" y="7" width="20" height="9" rx="2"/></svg>
+          </div>
+          <h3>اسم ریلیز را می‌فهمد</h3>
+          <p>
+            <span class="ltr">1080p</span>، <span class="ltr">x265</span>،
+            <span class="ltr">WEB-DL</span>، نام گروه، نقطه و آندرلاین، و حتی
+            <span class="ltr">www.SomeSite.us</span> اول اسم — همه کنار می‌روند تا عنوان واقعی بماند.
+          </p>
+        </article>
+
+        <article class="card" data-reveal>
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h.01M10 12h8"/></svg>
+          </div>
+          <h3>هارد لازم نیست وصل باشد</h3>
+          <p>
+            یک‌بار اسکن، و نام‌ها در یک دیتابیس SQLite کنار خودت می‌مانند. هارد اکسترنال را بگذار
+            توی کشو؛ جستجو سر جایش کار می‌کند.
+          </p>
+        </article>
+
+        <article class="card" data-reveal>
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/></svg>
+          </div>
+          <h3>فارسی را درست می‌خواند</h3>
+          <p>
+            «ي» عربی و «ک» عربی، اعداد ۰۱۲۳ فارسی، نیم‌فاصله، و واژه‌هایی مثل «دوبله فارسی» و
+            «بدون سانسور» — همه یکدست می‌شوند تا مقایسه معنا بدهد.
+          </p>
+        </article>
+
+        <article class="card" data-reveal>
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m13 2-9 12h7l-1 8 9-12h-7z"/></svg>
+          </div>
+          <h3>جستجوی زنده، حین تایپ</h3>
+          <p>
+            ایندکس در حافظه است و یک پیش‌فیلتر دوحرفی اول کار را سبک می‌کند، پس نتیجه همان‌طور که
+            می‌نویسی عوض می‌شود — حتی وقتی ده‌ها هزار نام ذخیره کرده‌ای.
+          </p>
+        </article>
+
+        <article class="card" data-reveal>
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <h3>هیچ‌چیز جایی نمی‌رود</h3>
+          <p>
+            نه حساب کاربری، نه ارسال آمار، نه ارتباط با سرور. فهرست فیلم‌هایت فقط روی کامپیوتر
+            خودت است و کد هم باز است تا همین را ببینی.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= live demo ================= -->
+  <section id="try">
+    <div class="container">
+      <div class="section-head center" data-reveal>
+        <span class="eyebrow">امتحانش کن</span>
+        <h2>همین‌جا، بدون دانلود</h2>
+        <p>
+          این همان الگوریتمی است که داخل برنامه اجرا می‌شود، پیاده‌شده در مرورگر. آرشیوِ این نمونه
+          ۱۳ فیلم ثابت است؛ در خود برنامه، پوشه‌های خودت.
+        </p>
+      </div>
+
+      <div class="demo" data-reveal>
+        <div class="demo-top">
+          <label class="demo-field" for="demo-input">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input id="demo-input" type="text" spellcheck="false" autocomplete="off"
+                   value="The.Matrix.1999.REMASTERED.1080p.BluRay.x265-RARBG"
+                   aria-label="اسم فیلمی که می‌خواهی دانلود کنی">
+          </label>
+
+          <div class="demo-presets">
+            <span>نمونه:</span>
+            <button class="preset" type="button" data-query="The.Matrix.1999.REMASTERED.1080p.BluRay.x265-RARBG">یک ریلیز کامل</button>
+            <button class="preset" type="button" data-query="Inception 2010">اسم ساده</button>
+            <button class="preset" type="button" data-query="Dune Part 2">نوشتن متفاوت</button>
+            <button class="preset" type="button" data-query="قصه های ماشينها دوبله">فارسی</button>
+            <button class="preset" type="button" data-query="Oppenheimer.2023.1080p.BluRay">فیلمی که ندارم</button>
+          </div>
+
+          <div class="demo-parsed" id="demo-parsed"></div>
+        </div>
+
+        <div class="demo-results" id="demo-results"></div>
+
+        <p class="demo-note">
+          عدد بزرگ، شباهت عنوان است؛ «نام خام» شباهت رشته‌ی اسم فایل، بدون هیچ تمیزکاری. در برنامه
+          آستانه‌ی نمایش را هم خودت تنظیم می‌کنی.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= how it works ================= -->
+  <section id="how">
+    <div class="container">
+      <div class="section-head center" data-reveal>
+        <span class="eyebrow">چطور کار می‌کند</span>
+        <h2>سه قدم، و تمام</h2>
+      </div>
+
+      <div class="steps">
+        <article class="step" data-reveal>
+          <h3>پوشه را بده</h3>
+          <p>
+            پوشه‌ی فیلم‌ها را بکش روی پنجره یا از دکمه‌ی «افزودن پوشه» انتخابش کن. زیرپوشه‌ها هم
+            خوانده می‌شوند و فقط فایل‌های ویدئویی و نام پوشه‌ها ثبت می‌شوند.
+          </p>
+        </article>
+
+        <article class="step" data-reveal>
+          <h3>یک‌بار خوانده می‌شود</h3>
+          <p>
+            نام‌ها، حجم و تاریخ در دیتابیس ذخیره می‌شوند، همراه با عنوان تمیزشده و سالی که از هر
+            اسم استخراج شده. بعد از این، درایو می‌تواند قطع باشد.
+          </p>
+        </article>
+
+        <article class="step" data-reveal>
+          <h3>قبل از دانلود، بپرس</h3>
+          <p>
+            اسم فیلم — یا کل نام تورنت — را در بخش جستجو بزن. هرچه شبیه بود با درصدش می‌آید، و
+            خودت تصمیم می‌گیری تکراری است یا نه.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= libraries ================= -->
+  <section>
+    <div class="container">
+      <div class="split">
+        <div data-reveal>
+          <div class="section-head" style="margin-block-end:28px">
+            <span class="eyebrow">کتابخانه‌ها</span>
+            <h2>هر درایو، یک کتابخانه</h2>
+          </div>
+          <ul class="list">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>
+              <span><b>وضعیت هر کتابخانه پیداست:</b> تعداد نام‌ها، زمان آخرین اسکن، و این‌که مسیرش
+              همین حالا در دسترس هست یا نه.</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>
+              <span><b>اسکن مجدد، آینه‌ی واقعیت است:</b> فایلی که پاک کرده باشی از آرشیو هم می‌رود،
+              پس نتیجه‌ی جستجو با چیزی که واقعاً داری یکی می‌ماند.</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>
+              <span><b>درایو نباشد، چیزی خراب نمی‌شود:</b> اگر مسیر در دسترس نباشد برنامه همین را
+              می‌گوید و به نام‌های ذخیره‌شده دست نمی‌زند.</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>
+              <span><b>«تحلیل مجدد نام‌ها»:</b> وقتی قواعد تشخیص بهتر می‌شوند، لازم نیست دوباره
+              همه‌ی هاردها را وصل کنی — از روی نام‌های ذخیره‌شده بازمحاسبه می‌کند.</span>
+            </li>
+          </ul>
+        </div>
+
+        <figure class="shot" style="margin:0" data-reveal>
+          <img src="assets/screenshot-libraries.png" width="1532" height="400"
+               alt="تب کتابخانه‌های FilmDex: یک کتابخانه با نام Movies، تعداد نام‌ها، زمان آخرین اسکن و وضعیت در دسترس بودن.">
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= internals ================= -->
+  <section id="internals">
+    <div class="container">
+      <div class="split">
+        <div data-reveal>
+          <div class="section-head" style="margin-block-end:28px">
+            <span class="eyebrow">زیر کاپوت</span>
+            <h2>چرا شباهت درست درمی‌آید</h2>
+          </div>
+          <ul class="list">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>
+              <span><b>اول نرمال‌سازی، بعد مقایسه.</b> سال، فصل و قسمت جدا می‌شوند و تگ‌های ریلیز
+              حذف. عنوان تمیز چیزی است که باقی می‌ماند.</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>
+              <span><b>مقایسه‌ی توکنی به‌علاوه‌ی فاصله‌ی لِوِنشتاین.</b> ترتیب کلمه‌ها اهمیت ندارد و
+              «matrix» داخل «the matrix reloaded» هم دیده می‌شود.</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>
+              <span><b>سال، نتیجه را جابه‌جا می‌کند.</b> سال یکسان امتیاز را بالا می‌برد و سال
+              متفاوت پایین — ولی نتیجه حذف نمی‌شود، فقط علامت می‌خورد.</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>
+              <span><b>پیش‌فیلتر دوحرفی.</b> به‌جای امتیازدهی کامل به همه‌ی نام‌ها، اول کاندیداها
+              با اشتراک دوحرفی‌ها کوتاه می‌شوند — و یک تست نگهبان است که این میان‌بر هیچ نتیجه‌ای
+              را از قلم نیندازد.</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="pipeline" data-reveal>
+          <div><span class="c">The.Matrix.1999.1080p.BluRay.x264-GROUP.mkv</span></div>
+          <div><span class="arrow">↓</span><span class="k">fold</span><span class="arrow">→</span>the matrix 1999 1080p bluray x264 group</div>
+          <div><span class="arrow">↓</span><span class="k">year</span><span class="arrow">→</span><span class="v">1999</span> <span class="k">// the title ends here</span></div>
+          <div><span class="arrow">↓</span><span class="k">tags</span><span class="arrow">→</span><span class="k">1080p bluray x264 group</span> <span class="k">// dropped</span></div>
+          <div><span class="arrow">↓</span><span class="k">title</span><span class="arrow">→</span><span class="g">"the matrix"</span></div>
+          <div style="margin-block-start:14px"><span class="k">query</span> <span class="c">"The.Matrix.1999.REMASTERED.1080p.BluRay.x265-RARBG"</span></div>
+          <div><span class="arrow">↓</span><span class="k">title %</span><span class="arrow">→</span><span class="g">100</span> <span class="k">(+5 same year, capped)</span></div>
+          <div><span class="arrow">↓</span><span class="k">raw %</span><span class="arrow">→</span><span class="v">66</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= download ================= -->
+  <section id="download">
+    <div class="container">
+      <div class="download-card" data-reveal>
+        <h2>دانلودش کن و تمام</h2>
+        <p>
+          زیپ را باز کن و <span class="ltr">FilmDex.exe</span> را اجرا کن. نه نصبی لازم است، نه
+          دات‌نتی، نه اینترنتی. آرشیو هم در
+          <span class="ltr">%LOCALAPPDATA%\FilmDex</span> می‌نشیند.
+        </p>
+
+        <div class="hero-actions" style="margin-block-start:32px">
+          <a class="btn btn-primary" href="https://github.com/sadrazkh/FilmDex/releases/download/v0.1.0/FilmDex-0.1.0-win-x64-portable.zip">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M4 21h16"/>
+            </svg>
+            نسخه‌ی ۰.۱.۰ · ۶۱ مگابایت
+          </a>
+          <a class="btn btn-ghost" href="https://github.com/sadrazkh/FilmDex/releases" target="_blank" rel="noopener">همه‌ی نسخه‌ها</a>
+        </div>
+
+        <div class="hash">
+          <span>SHA-256 زیپ:</span>
+          <code>549BBABBB2BB9BB2E7E203ACC716ADDD1684436CFB468555F9913BE61F60FC93</code>
+        </div>
+
+        <p style="margin-block-start:26px;font-size:14px;color:var(--muted)">
+          ویندوز ۱۰ یا ۱۱، ۶۴ بیتی. ساخته‌شده روی GitHub Actions از روی همین کد، با تست‌هایی که پیش از
+          انتشار اجرا می‌شوند.
+        </p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <span>FilmDex — یک ابزار شخصی برای این‌که یک فیلم را دوبار دانلود نکنی.</span>
+    <div class="footer-links">
+      <a href="https://github.com/sadrazkh/FilmDex" target="_blank" rel="noopener">کد روی گیت‌هاب</a>
+      <a href="https://github.com/sadrazkh/FilmDex/releases" target="_blank" rel="noopener">نسخه‌ها</a>
+      <a href="https://github.com/sadrazkh/FilmDex/issues" target="_blank" rel="noopener">گزارش ایراد</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Header gets its border once the page has moved.
+  var header = document.getElementById('header');
+  var onScroll = function () {
+    header.classList.toggle('is-stuck', window.scrollY > 10);
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Reveal on scroll, and never hide anything if the browser cannot observe.
+  var revealables = document.querySelectorAll('[data-reveal]');
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -80px 0px' });
+    revealables.forEach(function (el) { observer.observe(el); });
+  } else {
+    revealables.forEach(function (el) { el.classList.add('is-visible'); });
+  }
+</script>
+<script src="assets/demo.js?v=1"></script>
+
+</body>
+</html>
